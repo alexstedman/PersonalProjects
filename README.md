@@ -1,4 +1,4 @@
-# PersonalProjects
+# Personal Projects
 Personal Projects of Alex Stedman
 
 ## Index
