@@ -24,5 +24,5 @@ I used [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) to scrap
 <details>
  <summary>Challenges and how I tackled them</summary>
  <p>The links weren't always of the same format. Some ended with 'sfvrsn=4', others 'sfvrsn=6'. Some had date format yyyy-mm, others were mm-yyyy. I got round this with a simple nested for loop.  It's not an amazing solution, I admit, but it is easy to read for a programmer with no knowledge of the project.
- </p>
+[Code for scraping pdf links](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/notebook_scraping_links.png) </p>
 </details>
