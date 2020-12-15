@@ -1,9 +1,11 @@
+# Predicting the Fundsmith Equity Fund
+
 The Fundsmith Equity Fund is an Open Ended Investment Company (OEIC) managed by Terry Smith.  When it was launched in November 2010, Terry Smith commented that the [investment industry in the UK served only itself](https://www.theguardian.com/money/2010/nov/06/investment-funds-terry-smith-warren-buffet), and that his fund was focused on delivering superior returns to shareholders.  From inception to December 2020 the fund returned an average compound annual rate of 18.2%, beating the FTSE100, S&P500 and MSCI World Index.
 
 ![Fundsmith Performance vs FTSE100, S&P500, MSCI World Index](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/FS_performance.png)
 
 (Please note : I will use 'holdings' to describe the stock equity within the fund. Others may use 'stocks', 'equity', 'contents')
-The fund aims to own no more than 30 high-quality holdings, and aims to own those holdings for as long as possible to allow the company to compound in value. The fund does not disclose the weights of the holdings, nor a breakdown of all the holdings in the fund. I wanted to see if it was possible to pry open the fund and use some data science techniques to predict the weights of the holdings. The process was broken down in to the following steps:
+The fund aims to own no more than 30 high-quality holdings, and aims to own those holdings for as long as possible to allow the company to compound in value. These 2 factord make it a good candidate for applying some data science techniques to.  The fund does not disclose the weights of the holdings, nor a breakdown of all the holdings in the fund. It does, however, provide a commentary every month on any outright sales and purchases made within any partcular month, as well as the top 5 contributors and top 5 detractors for that month and the top 10 holdings. I wanted to see if it was possible to pry open the fund and use some data science techniques to predict the weights of the holdings. The process was broken down in to the following steps:
 
 1. Scrape data from the [Fundsmith monthly factsheets](https://www.fundsmith.co.uk/fund-factsheet) (scroll the bottom of the page) to find when holdings were bought and sold.
 2. Use the [Yahoo Finance python plugin](https://pypi.org/project/yfinance/) (aka 'yfinance') to download the daily price for every holding in the fund, as well as the fund price.
@@ -14,6 +16,10 @@ The fund aims to own no more than 30 high-quality holdings, and aims to own thos
 
 ## 1. Scraping the Data
 The first step in getting the data on the fund holdings was to find a document or webpage that described the *entire* holdings of the fund.  I did a thorough search of the Fundsmith website and found exactly that in the semi-annual report of July 2019 on the European version of the Fundsmith website (pages 11-12 [here](https://www.fundsmith.co.uk/docs/default-source/annual-reports-and-audited-financial-statements/unaudited-semi-annual-report-for-the-period-from-1-january-2019-to-30-june-2019.pdf?sfvrsn=4)).  This was to be my starting point.
+
+Inspecting the Fundsmith webpage showed the links to all the monthly pdfs containing the commentary I wanted on the purchases/sales made within the month.
+![]()
+used [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) to 
 
 <details>
  <summary>Title 1</summary>
