@@ -15,5 +15,6 @@ I graduated in 2007 from the University of Nottingham after taking an undergradu
 In 2016 I moved in to Geophysical Software Sales and then on to Financial Advice, but neither gave me the kind of stimulation from my data processing days.  So in 2020 I took a Data Science Bootcamp with General Assembly exploring Regression, Classification, Neural Networks and Statistics (to name just a few).  I had 4 deadlined projects and capstone project, some of which you will find here.
 
 ## Contact Me
-email    : alexstedman@icloud.com
+Email    : alexstedman@icloud.com
+
 LinkedIn : https://www.linkedin.com/in/stedmanalex/
