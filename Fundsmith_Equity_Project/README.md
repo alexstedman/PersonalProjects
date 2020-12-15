@@ -1,0 +1,1 @@
+Fundsmith Equity Project README
