@@ -22,9 +22,17 @@ Inspecting the Fundsmith webpage showed the links to all the monthly pdfs contai
 I used [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) to scrape the links to all pdfs and saved them to file.
 
 <details>
- <summary><b>Challenges and how I tackled them</b></summary>
+ <summary><b>Challenges in scraping pdf links and how I tackled them</b></summary>
  <p>The links weren't always of the same format. Some ended with 'sfvrsn=4', others 'sfvrsn=6'. Some had date format yyyy-mm, others were mm-yyyy. I got round this with a simple nested for loop.  It's not an amazing solution, I admit, but it is easy to read for a programmer with no knowledge of the project.
   
 <img src="https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/notebook_scraping_links.png" alt="Code for scraping pdf links"></p>
 </details>
 
+The next step was to use the requests library in python to open each link and write the contents to file.
+With the pdfs downloaded, I then had to find a way to extract the relevant information from them.
+
+<details>
+ <summary><b>Failures on extracting information from pdfs, and what I learned</b></summary>
+ <p>I first attempted to extract the information using <a href="https://pypi.org/project/pdfplumber/">pdfplumber</a> , 
+  </p>
+</details>
