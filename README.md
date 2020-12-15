@@ -4,7 +4,7 @@ Personal Projects of Alex Stedman
 ## Index
 This repository is for all of my personal projects.  Please click on the links below for access to them.
 
-[Links]
+[Fundsmith Equity Fund : Predicting stock weightings and fund price movements](https://github.com/alexstedman/PersonalProjects/tree/main/Fundsmith_Equity_Project)
 
 ## About Me
 
