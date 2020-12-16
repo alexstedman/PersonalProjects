@@ -43,7 +43,9 @@ With the pdfs downloaded, I then had to find a way to extract the relevant infor
    <img src=https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/pdfplumber_actual.png alt="Results from pdfplumber and RegEx applied to all pdfs">
    
    The lesson learned is to ensure your test data is in the same format as your training data. In this case, there were 2 issues:
-   1. The team at Fundsmith hadn't decided on a strict format early on in the funds existence. As such, the placement of the relvant information would move around the pdf from month to month. It eventually settled into a strict format after 8 months.
+   1. The team at Fundsmith hadn't decided on a strict format early on in the funds existence. As such, the placement of the relevant information would move around the pdf from month to month. It eventually settled into a strict format after 8 months.
    2. The size of the 'comment' section impacted the placement of the top 5 contributors and top 5 detractors.  If a lot had occurred that month, then the top 5s would be shifted down and fall outside of the parameters specified in pdfplumber.
   </p>
 </details>
+ Using an online pdf-to-text converter, I created one text file for each month's pdf commentary. I opened the files, read them and extracted the relevant information using RegEx, storing them in a dictionary.
+ 
