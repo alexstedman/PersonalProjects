@@ -33,6 +33,6 @@ With the pdfs downloaded, I then had to find a way to extract the relevant infor
 
 <details>
  <summary><b>Failures on extracting information from pdfs, and what I learned</b></summary>
- <p>I first attempted to extract the information using <a href="https://pypi.org/project/pdfplumber/">pdfplumber</a> , 
+ <p>I first attempted to extract the information using <a href="https://pypi.org/project/pdfplumber/">pdfplumber</a>, a tool that converts a pdf to text line-by-line (column formatting is ignored). I specified a text box from where pdfplumber could extract the information from, with the results below.
   </p>
 </details>
