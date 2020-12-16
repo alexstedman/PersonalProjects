@@ -34,5 +34,16 @@ With the pdfs downloaded, I then had to find a way to extract the relevant infor
 <details>
  <summary><b>Failures on extracting information from pdfs, and what I learned</b></summary>
  <p>I first attempted to extract the information using <a href="https://pypi.org/project/pdfplumber/">pdfplumber</a>, a tool that converts a pdf to text line-by-line (column formatting is ignored). I specified a text box from where pdfplumber could extract the information from, with the results below.
+  <img src=https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/pdfplumber_train_raw.png alt="Raw training results from pdfplumber">
+  
+  After a bit of RegEx I wrote a function that extracted the relevant informaion out of the above screenshot, as seen below.
+  <img src=https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/pdfplumber_train_results.png alt="Results from pdfplumber after RegEx">
+  
+  However, when I applied this to all the other pdfs, the results were not as I thought they would be.
+   <img src=https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/pdfplumber_actual.png alt="Results from pdfplumber and RegEx applied to all pdfs">
+   
+   The lesson learned is to ensure your test data is in the same format as your training data. In this case, there were 2 issues:
+   1. The team at Fundsmith hadn't decided on a strict format early on in the funds existence. As such, the placement of the relvant information would move around the pdf from month to month. It eventually settled into a strict format after 8 months.
+   2. The size of the 'comment' section impacted the placement of the top 5 contributors and top 5 detractors.  If a lot had occurred that month, then the top 5s would be shifted down and fall outside of the parameters specified in pdfplumber.
   </p>
 </details>
