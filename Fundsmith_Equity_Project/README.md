@@ -74,4 +74,4 @@ The next phase of data scraping was to find the prices of the holdings on the da
 
 yfinance uses company ticker symbols as input, and I didn't have these.  No worries though; I called the column names of the DataBase and then manually searched the internet for them. I put these in a list and then iterated over it with a simple for loop, placing the symbols in to the yfinance input variable.  The dates I chose for it to return were the full span of the funds existence - November 2010 to November 2020.  I chose this way over extracting the dates from the DataFrame because I could simply multiply the results by the 1s and NaNs in the DataFrame to filter them down to their relevant dates that way.
 
-![yfinance initial results](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/yfinance_results.png)
+![yfinance initial results](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/yfinance_result.png)
