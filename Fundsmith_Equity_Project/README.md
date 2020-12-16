@@ -49,3 +49,4 @@ With the pdfs downloaded, I then had to find a way to extract the relevant infor
 </details>
  Using an online pdf-to-text converter, I created one text file for each month's pdf commentary. I opened the files, read them and extracted the relevant information using RegEx, storing them in a dictionary.
  
+ ![Extracting the relevant information from monthyl PDFs](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/extract_pdf_info.png)
