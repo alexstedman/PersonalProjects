@@ -23,7 +23,8 @@ I used [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) to scrap
 
 <details>
  <summary><b>Challenges in scraping pdf links and how I tackled them</b></summary>
- <p>The links weren't always of the same format. Some ended with 'sfvrsn=4', others 'sfvrsn=6'. Some had date format yyyy-mm, others were mm-yyyy. I got round this with a simple nested for loop.  It's not an amazing solution, I admit, but it is easy to read for a programmer with no knowledge of the project.
+ <p>
+  The links weren't always of the same format. Some ended with 'sfvrsn=4', others 'sfvrsn=6'. Some had date format yyyy-mm, others were mm-yyyy. I got round this with a simple nested for loop.  It's not an amazing solution, I admit, but it is easy to read for a programmer with no knowledge of the project.
   
 <img src="https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/notebook_scraping_links.png" alt="Code for scraping pdf links"></p>
 </details>
@@ -33,13 +34,16 @@ With the pdfs downloaded, I then had to find a way to extract the relevant infor
 
 <details>
  <summary><b>Failures on extracting information from pdfs, and what I learned</b></summary>
- <p>I first attempted to extract the information using <a href="https://pypi.org/project/pdfplumber/">pdfplumber</a>, a tool that converts a pdf to text line-by-line (column formatting is ignored). I specified a text box from where pdfplumber could extract the information from, with the results below.
+ <p>
+  I first attempted to extract the information using <a href="https://pypi.org/project/pdfplumber/">pdfplumber</a>, a tool that converts a pdf to text line-by-line (column formatting is ignored). I specified a text box from where pdfplumber could extract the information from, with the results below.
+  
   <img src=https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/pdfplumber_train_raw.png alt="Raw training results from pdfplumber">
   
   After a bit of RegEx I wrote a function that extracted the relevant informaion out of the above screenshot, as seen below.
   <img src=https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/pdfplumber_train_results.png alt="Results from pdfplumber after RegEx">
   
   However, when I applied this to all the other pdfs, the results were not as I thought they would be.
+  
    <img src=https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/pdfplumber_actual.png alt="Results from pdfplumber and RegEx applied to all pdfs">
    
    The lesson learned is to ensure your test data is in the same format as your training data. In this case, there were 2 issues:
@@ -49,14 +53,25 @@ With the pdfs downloaded, I then had to find a way to extract the relevant infor
 </details>
  Using an online pdf-to-text converter, I created one text file for each month's pdf commentary. I opened the files, read them and extracted the relevant information using RegEx, storing them in a dictionary.
  
- ![Extracting the relevant information from monthyl PDFs](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/extract_pdf_info.png)
+![Extracting the relevant information from monthyl PDFs](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/extract_pdf_info.png)
 
-From here, I created a Pandas DataFrame and input the information from the July 2019 semi-annual report detailing the full breakdown of the holdings.  From there, I went through the comments to see when each holding was bought or sold and input this in to the DataFrame (with '1' indicating the holding is present, and a NaN for when the holding is not).
+From here, I created a Pandas DataFrame (as a Time Series) and input the information from the July 2019 semi-annual report detailing the full breakdown of the holdings.  From there, I went through the comments to see when each holding was bought or sold and input this in to the DataFrame (with '1' indicating the holding is present, and a NaN for when the holding is not).
 
 <details>
  <summary><b>Solving the challenge of missing holdings</b></summary>
- <p>3 holdings were specified in the 2019 semi-annual report that were not found in the bought/sold part of the comment section of the pdfs. These need to be accounted for, so what approach did I take to find them?
-  Without a definite month where Fundsmith commented on the buy/sell of these 3 holdings, I decided to search all the pdfs in their entirety for the first mention of each of the holdings.  Possible issues that need to be kept in mind are that the holdings may have been bought, but are only mentioned in the monthly pdf when it reaches one of the top 10 holdings, or is one of the top 5 contributors or top 5 detractors.  The following code shows my approach and the result.
+ <p>
+  3 holdings were specified in the 2019 semi-annual report that were not found in the bought/sold part of the comment section of the pdfs. These need to be accounted for, so what approach did I take to find them?
+  
+  Without a definite month where Fundsmith commented on the buy/sell of the missing 3 holdings, I decided to search all the pdfs in their entirety for the first mention of each.  Possible issues that should be kept in mind are that the holdings may have been bought, but are only mentioned in the monthly pdf when it reaches one of the top 10 holdings, or is one of the top 5 contributors or top 5 detractors.  The following code shows my approach and the result.
+   
    <img src=https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/missing_holdings.png alt="Searching pdfs for any mention of Amadeus, Diageo and Intertek">
  </p>
 </details>
+
+After accounting for all the holdings, I interpolated the data from monthly to daily (business days) resulting in a DataFrame with observations on UK business days from November 2010 to November 2020, and columns of every holding the fund has ever had, with its presence in the fund indicated by a '1' or NaN if not present.
+
+The next phase of data scraping was to find the prices of the holdings on the days they were in the fund.  For this, I used yahoo finance (which I will refer to as yfinance from now on).  This is a simple python plugin that allows you to search for publically traded companies and returns information on the opening price, closing price, intra-day lows and highs, any stocks splits that occured that day and what dividends were paid. What a great little tool!
+
+yfinance uses company ticker symbols as input, and I didn't have these.  No worries though; I called the column names of the DataBase and then manually searched the internet for them. I put these in a list and then iterated over it with a simple for loop, placing the symbols in to the yfinance input variable.  The dates I chose for it to return were the full span of the funds existence - November 2010 to November 2020.  I chose this way over extracting the dates from the DataFrame because I could simply multiply the results by the 1s and NaNs in the DataFrame to filter them down to their relevant dates that way.
+
+![yfinance initial results](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/yfinance_results.png)
