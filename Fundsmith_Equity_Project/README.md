@@ -50,3 +50,13 @@ With the pdfs downloaded, I then had to find a way to extract the relevant infor
  Using an online pdf-to-text converter, I created one text file for each month's pdf commentary. I opened the files, read them and extracted the relevant information using RegEx, storing them in a dictionary.
  
  ![Extracting the relevant information from monthyl PDFs](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/extract_pdf_info.png)
+
+From here, I created a Pandas DataFrame and input the information from the July 2019 semi-annual report detailing the full breakdown of the holdings.  From there, I went through the comments to see when each holding was bought or sold and input this in to the DataFrame (with '1' indicating the holding is present, and a NaN for when the holding is not).
+
+<details>
+ <summary><b>Solving the challenge of missing holdings</b></summary>
+ <p>3 holdings were specified in the 2019 semi-annual report that were not found in the bought/sold part of the comment section of the pdfs. These need to be accounted for, so what approach did I take to find them?
+  Without a definite month where Fundsmith commented on the buy/sell of these 3 holdings, I decided to search all the pdfs in their entirety for the first mention of each of the holdings.  Possible issues that need to be kept in mind are that the holdings may have been bought, but are only mentioned in the monthly pdf when it reaches one of the top 10 holdings, or is one of the top 5 contributors or top 5 detractors.  The following code shows my approach and the result.
+   <img src=https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/missing_holdings.png alt="Searching pdfs for any mention of Amadeus, Diageo and Intertek">
+ </p>
+</details>
