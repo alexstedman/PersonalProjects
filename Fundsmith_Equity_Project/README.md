@@ -34,6 +34,7 @@ I used [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) to scrap
 The next step was to use the requests library in python to open each link and write the contents to file.
 With the pdfs downloaded, I then had to find a way to extract the relevant information from them.
 
+----
 <details>
  <summary><b>Failures on extracting information from pdfs, and what I learned</b></summary>
  <p>
@@ -53,12 +54,15 @@ With the pdfs downloaded, I then had to find a way to extract the relevant infor
    2. The size of the 'comment' section impacted the placement of the top 5 contributors and top 5 detractors.  If a lot had occurred that month, then the top 5s would be shifted down and fall outside of the parameters specified in pdfplumber.
   </p>
 </details>
+
+----
  Using an online pdf-to-text converter, I created one text file for each month's pdf commentary. I opened the files, read them and extracted the relevant information using RegEx, storing them in a dictionary.
  
 ![Extracting the relevant information from monthyl PDFs](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/extract_pdf_info.png)
 
 From here, I created a Pandas DataFrame (as a Time Series) and input the information from the July 2019 semi-annual report detailing the full breakdown of the holdings.  From there, I went through the comments to see when each holding was bought or sold and input this in to the DataFrame (with '1' indicating the holding is present, and a NaN for when the holding is not).
 
+----
 <details>
  <summary><b>Solving the challenge of missing holdings</b></summary>
  <p>
@@ -70,6 +74,7 @@ From here, I created a Pandas DataFrame (as a Time Series) and input the informa
  </p>
 </details>
 
+----
 After accounting for all the holdings, I interpolated the data from monthly to daily (business days) resulting in a DataFrame with observations on UK business days from November 2010 to November 2020, and columns of every holding the fund has ever had, with its presence in the fund indicated by a '1' or NaN if not present.
 
 The next phase of data scraping was to find the prices of the holdings on the days they were in the fund.  For this, I used yahoo finance (which I will refer to as yfinance from now on).  This is a simple python plugin that allows you to search for publically traded companies and returns information on the opening price, closing price, intra-day lows and highs, any stocks splits that occured that day and what dividends were paid. What a great little tool!
