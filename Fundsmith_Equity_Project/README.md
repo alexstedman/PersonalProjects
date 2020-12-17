@@ -76,7 +76,7 @@ From here, I created a Pandas DataFrame (as a Time Series) and input the informa
 ----
 After accounting for all the holdings, I interpolated the data from monthly to daily (business days) resulting in a DataFrame with observations on UK business days from November 2010 to November 2020, and columns of every holding the fund has ever had, with its presence in the fund indicated by a '1' or NaN if not present.
 
-## Use yfinance to import stock prices and exchange rates
+## 2. Use yfinance to import stock prices and exchange rates
 The next phase of data scraping was to find the prices of the holdings on the days they were in the fund.  For this, I used yahoo finance (which I will refer to as yfinance from now on).  This is a simple python plugin that allows you to search for publically traded companies and returns information on the opening price, closing price, intra-day lows and highs, any stocks splits that occured that day and what dividends were paid. What a great little tool!
 
 yfinance uses company ticker symbols as input, and I didn't have these.  No worries though; I called the column names of the DataBase and then manually searched the internet for them. I put these in a list and then iterated over it with a simple for loop, placing the symbols in to the yfinance input variable.  The dates I chose for it to return were the full span of the funds existence - November 2010 to November 2020.  I chose this way over extracting the dates from the DataFrame because I could simply multiply the results by the 1s and NaNs in the DataFrame to filter them down to their relevant dates that way.
