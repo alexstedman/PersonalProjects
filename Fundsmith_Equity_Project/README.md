@@ -8,11 +8,10 @@ The Fundsmith Equity Fund is an Open Ended Investment Company (OEIC) managed by 
 The fund aims to own no more than 30 high-quality holdings, and aims to own those holdings for as long as possible to allow the company to compound in value. These 2 factord make it a good candidate for applying some data science techniques to.  The fund does not disclose the weights of the holdings, nor a breakdown of all the holdings in the fund. It does, however, provide a commentary every month on any outright sales and purchases made within any partcular month, as well as the top 5 contributors and top 5 detractors for that month and the top 10 holdings. I wanted to see if it was possible to pry open the fund and use some data science techniques to predict the weights of the holdings. The process was broken down in to the following steps:
 
 1. Scrape data from the [Fundsmith monthly factsheets](https://www.fundsmith.co.uk/fund-factsheet) (scroll the bottom of the page) to find when holdings were bought and sold.
-2. Use the [Yahoo Finance python plugin](https://pypi.org/project/yfinance/) (aka 'yfinance') to download the daily price for every holding in the fund, as well as the fund price.
-3. Don't forget to get the currency exchange rates (also from yfinance)
-4. Use linear regression with holding prices as predictors and fund price as target to find the line of best fit. The co-efficients describe the amount of influence each holding price has on the fund price movement, and in theory should align with the actual holding weight.
-5. BONUS : Use the model to predict the fund price on a test set of data.
-6. BONUS : I thought I would try some ARIMA modelling to illustrate that 'past performance does not predic future returns'
+2. Use the [Yahoo Finance python plugin](https://pypi.org/project/yfinance/) (aka 'yfinance') to download the daily price for every holding in the fund, as well as the fund price. Don't forget to get the currency exchange rates (also from yfinance)
+3. Use linear regression with holding prices as predictors and fund price as target to find the line of best fit. The co-efficients describe the amount of influence each holding price has on the fund price movement, and in theory should align with the actual holding weight.
+4. BONUS : Use the model to predict the fund price on a test set of data.
+5. BONUS : I thought I would try some ARIMA modelling to illustrate that 'past performance does not predic future returns'
 
 ## 1. Scraping the Data
 The first step in getting the data on the fund holdings was to find a document or webpage that described the *entire* holdings of the fund.  I did a thorough search of the Fundsmith website and found exactly that in the semi-annual report of July 2019 on the European version of the Fundsmith website (pages 11-12 [here](https://www.fundsmith.co.uk/docs/default-source/annual-reports-and-audited-financial-statements/unaudited-semi-annual-report-for-the-period-from-1-january-2019-to-30-june-2019.pdf?sfvrsn=4)).  This was to be my starting point.
@@ -77,6 +76,7 @@ From here, I created a Pandas DataFrame (as a Time Series) and input the informa
 ----
 After accounting for all the holdings, I interpolated the data from monthly to daily (business days) resulting in a DataFrame with observations on UK business days from November 2010 to November 2020, and columns of every holding the fund has ever had, with its presence in the fund indicated by a '1' or NaN if not present.
 
+## Use yfinance to import stock prices and exchange rates
 The next phase of data scraping was to find the prices of the holdings on the days they were in the fund.  For this, I used yahoo finance (which I will refer to as yfinance from now on).  This is a simple python plugin that allows you to search for publically traded companies and returns information on the opening price, closing price, intra-day lows and highs, any stocks splits that occured that day and what dividends were paid. What a great little tool!
 
 yfinance uses company ticker symbols as input, and I didn't have these.  No worries though; I called the column names of the DataBase and then manually searched the internet for them. I put these in a list and then iterated over it with a simple for loop, placing the symbols in to the yfinance input variable.  The dates I chose for it to return were the full span of the funds existence - November 2010 to November 2020.  I chose this way over extracting the dates from the DataFrame because I could simply multiply the results by the 1s and NaNs in the DataFrame to filter them down to their relevant dates that way.
@@ -88,3 +88,5 @@ Uh-oh.  3 holdings couldn't be found by yfinance on the public stock exchange; C
 The prices for these holdings needed to be found another way.  I scoured the internet and found them through investing.com, then it was a small step to put the data into a csv file and read them into the DataFrame.
 
 For reference, at this point my DataFrame has columns of every holding that has existed in the Fund, with '1's and NaNs for dates where the holding is present or not in the Fund (I shall call this thee 'visibility').  There are also columns of every holding with its opening price on the day.  There is one final bit of information to obtain to complete the data collecion - currency movements.  The Fundsmith Equity Fund invests in stocks in the UK, USA and Europe.  yfinance can again be used to pull the currency exchange rates.  Once this was done, the final DataFrame was created by multiplying the visibility of the holdings by the opening prince of the holdings and (if necessary) the exchange rate, followed by appending the Equity Fund price (draw again from yfinance).
+
+## 3. Use Linear Regression to predict weights of the fund holdings
