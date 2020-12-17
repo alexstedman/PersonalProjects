@@ -21,6 +21,7 @@ Inspecting the Fundsmith webpage showed the links to all the monthly pdfs contai
 ![The Fundsmith Equity Fund Documents page with web inspector](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/FS_page_inspection.png)
 I used [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) to scrape the links to all pdfs and saved them to file.
 
+----
 <details>
  <summary><b>Challenges in scraping pdf links and how I tackled them</b></summary>
  <p>
@@ -28,6 +29,7 @@ I used [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) to scrap
   
 <img src="https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/notebook_scraping_links.png" alt="Code for scraping pdf links"></p>
 </details>
+----
 
 The next step was to use the requests library in python to open each link and write the contents to file.
 With the pdfs downloaded, I then had to find a way to extract the relevant information from them.
