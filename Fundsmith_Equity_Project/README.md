@@ -111,7 +111,7 @@ With these found, I performed some cross-validated regression using 80% of the d
 
 I extracted the coefficients and compared them to the USA holding weights with a bar chart illustrating the results below.
 
-![Model coefficients and actual USA holding weight](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/coefficients_USA_weights_copy.png)
+![Model coefficients and actual USA holding weight](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/coefficients_USA_weights_copy.jpg)
 
 You can see the model coefficients are close to their true values for 4 holdings : Becton Dickinson, Intuit, Pepsi and Brown Forman.  The rest range from being 'in the ball park' (Paypal), 'vastly over-estimated' (Stryker, Microsoft) and 'completely wrong' (ADP).  The r2 score between the model coefficients and true weights is 1.8%.
 
