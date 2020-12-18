@@ -18,6 +18,7 @@ The fund aims to own no more than 30 high-quality holdings, and aims to own thos
 The first step in getting the data on the fund holdings was to find a document or webpage that described the *entire* holdings of the fund.  I did a thorough search of the Fundsmith website and found exactly that in the semi-annual report of July 2019 on the European version of the Fundsmith website (pages 11-12 [here](https://www.fundsmith.co.uk/docs/default-source/annual-reports-and-audited-financial-statements/unaudited-semi-annual-report-for-the-period-from-1-january-2019-to-30-june-2019.pdf?sfvrsn=4)).  This was to be my starting point.
 
 Inspecting the Fundsmith webpage showed the links to all the monthly pdfs containing the commentary I wanted on the purchases/sales made within the month.
+
 ![The Fundsmith Equity Fund Documents page with web inspector](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/FS_page_inspection.png)
 I used [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) to scrape the links to all pdfs and saved them to file.
 
@@ -96,8 +97,24 @@ Let's have a look at the data.  Below is a plot containing the price movement of
 
 ![Holding prices vs Fund price](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/holding_vs_fund.png)
 
+One of the first things you'll notice is the absence of data for Del Monte, Nike and Starbucks.  The latter 2 entered the fund only at the end of the time series.  They were holdings that were being built up and hadn't formally reached the desired weighting (by Fundsmith's own account) but they were mentioned in the monthly commentary which is how they had come to be included in the DataFrame.  Del Monte is a more complicated story involving its parent company with a very similar name buying Del Monte, and then changing its name Del Monte.  No data can be found, as far as I'm aware, on the share price of the original Del Monte.
+
+The correlation between holding price and Fund price is greater than 90% for 28 holdings, and greater than 80% for 39 holdings (out of a total of 45 holdings, excluding Del Monte, Starbucks and Nike).  This is looking promising.
+
 ## 4. Use Linear Regression to predict weights of the fund holdings
 
 I just want to re-iterate the hypothesis I'm testing.  By knowing the prices of the underling holdings over a significant period of time, the price of the Fund can be calculated.  Performing linear regression (using the holding prices as predictors and Fund price as target) trains the model with coefficients assigned to each holding.  The coefficients are a 'weight' quantifying the influence of each holding's price on the Fund price.  In theory, the coefficients should then be the same as the true weights of the holdings in the fund.
 
 Before performing the regression I needed to source the true weights of the holdings.  Fundsmith are under no obligation under UK law to disclose their holdings, but the law in the Unites States of America states that all companies that hold shares in USA companies must declare those holdings, and the amount they own, on a quarterly basis in a '13F' filing.  I found a site called [Whale Wisdom](https://whalewisdom.com/) that shows these filings.
+
+With these found, I performed some cross-validated regression using 80% of the data as training data and a k-fold of 5 (all CV r2 scores came above 98%). The model was tested on the remaining 20% of the data with an r2 score of 99%.  These high scores shouldn't be too surprising; after all, the Fund price *does* move in line with the holding price movements in a linear fashion.
+
+I extracted the coefficients and compared them to the USA holding weights with a bar chart illustrating the results below.
+
+![Model coefficients and actual USA holding weight](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/coefficients_USA_weights_copy.png)
+
+You can see the model coefficients are close to their true values for 4 holdings : Becton Dickinson, Intuit, Pepsi and Brown Forman.  The rest range from being 'in the ball park' (Paypal), 'vastly over-estimated' (Stryker, Microsoft) and 'completely wrong' (ADP).  The r2 score between the model coefficients and true weights is 1.8%.
+
+I wondered how much of an affect reducing the number of predictors would have on the model coefficients.  So I created a dictionary and sytematically filled it with keys of the number of predictors in the USA holdings, and the values being the r2 score between the model coefficients and the true weights.  A bar chart of the result is below.
+
+![Number of predictors vs R2 score of coefficients and true weights USA](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/r2_scores_num_holdings.png)
