@@ -115,6 +115,18 @@ I extracted the coefficients and compared them to the USA holding weights with a
 
 You can see the model coefficients are close to their true values for 4 holdings : Becton Dickinson, Intuit, Pepsi and Brown Forman.  The rest range from being 'in the ball park' (Paypal), 'vastly over-estimated' (Stryker, Microsoft) and 'completely wrong' (ADP).  The r2 score between the model coefficients and true weights is 1.8%.
 
-I wondered how much of an affect reducing the number of predictors would have on the model coefficients.  So I created a dictionary and sytematically filled it with keys of the number of predictors in the USA holdings, and the values being the r2 score between the model coefficients and the true weights.  A bar chart of the result is below.
+I wondered how much of an affect reducing the number of predictors would have on the model coefficients.  So I created a dictionary and sytematically filled it with keys of the number of predictors, and the values being the r2 score between the model coefficients and the true weights.  Only the holding with the lowest coefficient was removed from the model in each iteration.  A bar chart of the result is below.
 
 ![Number of predictors vs R2 score of coefficients and true weights USA](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/r2_scores_num_holdings.png)
+
+The r2 score reduces dramatically when the number of holdings is reduced past 32.  Note that I removed from the plot the r2 values when the number of predictors fell below 12 because they were so negative that they swamped out the rest of the data when plotted.  The maximum r2 score occurs with 39 predictors and has a value of 13.2%. If you are interested in viewing the bar chart of the coefficients and actual weights, open the toggle below.
+
+----
+<details>
+ <summary><b>Coefficients and true weights with maximum R2 score</b></summary>
+ <p>
+ <img src=https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/final_coef_weights.png alt="Model Coefficients & true weights for 39 predictors">
+ </p>
+</details>
+
+----
