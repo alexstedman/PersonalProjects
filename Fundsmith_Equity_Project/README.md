@@ -11,8 +11,7 @@ The fund aims to own no more than 30 high-quality holdings, and aims to own thos
 2. Use the [Yahoo Finance python plugin](https://pypi.org/project/yfinance/) (aka 'yfinance') to download the daily price for every holding in the fund, as well as the fund price. Don't forget to get the currency exchange rates (also from yfinance)
 3. Explore the data
 4. Use linear regression with holding prices as predictors and fund price as target to find the line of best fit. The co-efficients describe the amount of influence each holding price has on the fund price movement, and in theory should align with the actual holding weight.
-5. BONUS : Use the model to predict the fund price on a test set of data.
-6. BONUS : I thought I would try some ARIMA modelling to illustrate that 'past performance does not predic future returns'
+5. BONUS : I thought I would try some ARIMA modelling to illustrate that 'past performance does not predict future returns'
 
 ## 1. Scraping the Data
 The first step in getting the data on the fund holdings was to find a document or webpage that described the *entire* holdings of the fund.  I did a thorough search of the Fundsmith website and found exactly that in the semi-annual report of July 2019 on the European version of the Fundsmith website (pages 11-12 [here](https://www.fundsmith.co.uk/docs/default-source/annual-reports-and-audited-financial-statements/unaudited-semi-annual-report-for-the-period-from-1-january-2019-to-30-june-2019.pdf?sfvrsn=4)).  This was to be my starting point.
