@@ -97,7 +97,7 @@ Let's have a look at the data.  Below is a plot containing the price movement of
 
 ![Holding prices vs Fund price](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/holding_vs_fund.png)
 
-One of the first things you'll notice is the absence of data for Del Monte, Nike and Starbucks.  The latter 2 entered the fund only at the end of the time series.  They were holdings that were being built up and hadn't formally reached the desired weighting (by Fundsmith's own account) but they were mentioned in the monthly commentary which is how they had come to be included in the DataFrame.  Del Monte is a more complicated story involving its parent company with a very similar name buying Del Monte, and then changing its name Del Monte.  No data can be found, as far as I'm aware, on the share price of the original Del Monte.
+One of the first things you'll notice is the absence of data for Del Monte, Nike and Starbucks.  The latter 2 entered the fund only at the end of the time series.  They were holdings that were being built up and hadn't formally reached the desired weighting (by Fundsmith's own account) but they were mentioned in the monthly commentary which is how they had come to be included in the DataFrame.  Del Monte is a more complicated story involving its parent company with a very similar name buying Del Monte, and then changing its name back to Del Monte.  No data can be found, as far as I'm aware, on the share price of the original Del Monte company.
 
 The correlation between holding price and Fund price is greater than 90% for 28 holdings, and greater than 80% for 39 holdings (out of a total of 45 holdings, excluding Del Monte, Starbucks and Nike).  This is looking promising.
 
