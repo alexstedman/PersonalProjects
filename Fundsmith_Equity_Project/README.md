@@ -9,9 +9,10 @@ The fund aims to own no more than 30 high-quality holdings, and aims to own thos
 
 1. Scrape data from the [Fundsmith monthly factsheets](https://www.fundsmith.co.uk/fund-factsheet) (scroll the bottom of the page) to find when holdings were bought and sold.
 2. Use the [Yahoo Finance python plugin](https://pypi.org/project/yfinance/) (aka 'yfinance') to download the daily price for every holding in the fund, as well as the fund price. Don't forget to get the currency exchange rates (also from yfinance)
-3. Use linear regression with holding prices as predictors and fund price as target to find the line of best fit. The co-efficients describe the amount of influence each holding price has on the fund price movement, and in theory should align with the actual holding weight.
-4. BONUS : Use the model to predict the fund price on a test set of data.
-5. BONUS : I thought I would try some ARIMA modelling to illustrate that 'past performance does not predic future returns'
+3. Explore the data
+4. Use linear regression with holding prices as predictors and fund price as target to find the line of best fit. The co-efficients describe the amount of influence each holding price has on the fund price movement, and in theory should align with the actual holding weight.
+5. BONUS : Use the model to predict the fund price on a test set of data.
+6. BONUS : I thought I would try some ARIMA modelling to illustrate that 'past performance does not predic future returns'
 
 ## 1. Scraping the Data
 The first step in getting the data on the fund holdings was to find a document or webpage that described the *entire* holdings of the fund.  I did a thorough search of the Fundsmith website and found exactly that in the semi-annual report of July 2019 on the European version of the Fundsmith website (pages 11-12 [here](https://www.fundsmith.co.uk/docs/default-source/annual-reports-and-audited-financial-statements/unaudited-semi-annual-report-for-the-period-from-1-january-2019-to-30-june-2019.pdf?sfvrsn=4)).  This was to be my starting point.
@@ -83,10 +84,20 @@ yfinance uses company ticker symbols as input, and I didn't have these.  No worr
 
 ![yfinance initial results](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/yfinance_result.png)
 
-Uh-oh.  3 holdings couldn't be found by yfinance on the public stock exchange; CR Bard (ticker: BCR), Sigma-Aldritch (ticker: SIAL) and Dr. Pepper Snapple (DPS).
+Uh-oh.  3 holdings couldn't be found by yfinance on the public stock exchange; Sigma-Aldritch (ticker: SIAL), CR Bard (ticker: BCR) and Dr. Pepper Snapple (DPS).
 
-The prices for these holdings needed to be found another way.  I scoured the internet and found them through investing.com, then it was a small step to put the data into a csv file and read them into the DataFrame.
+The prices for these holdings needed to be found another way.  I scoured the internet and found them through investing.com. It was then a small step to copy the data from the website, input it into a csv file and read them into the DataFrame.
 
 For reference, at this point my DataFrame has columns of every holding that has existed in the Fund, with '1's and NaNs for dates where the holding is present or not in the Fund (I shall call this thee 'visibility').  There are also columns of every holding with its opening price on the day.  There is one final bit of information to obtain to complete the data collecion - currency movements.  The Fundsmith Equity Fund invests in stocks in the UK, USA and Europe.  yfinance can again be used to pull the currency exchange rates.  Once this was done, the final DataFrame was created by multiplying the visibility of the holdings by the opening prince of the holdings and (if necessary) the exchange rate, followed by appending the Equity Fund price (again, drawn from yfinance).
 
-## 3. Use Linear Regression to predict weights of the fund holdings
+## 3. Explore the data
+
+Let's have a look at the data.  Below is a plot containing the price movement of each holding on the x-axis, the fund price movement on the y-axis, and colour-graded by time in the fund (red is when the holding entered the fund, through to orange and yellow, ending in blue when the gholding either exited the fund or is up to the end of the time series in November 2020).
+
+![Holding prices vs Fund price](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/holding_vs_fund.png)
+
+## 4. Use Linear Regression to predict weights of the fund holdings
+
+I just want to re-iterate the hypothesis I'm testing.  By knowing the prices of the underling holdings over a significant period of time, the price of the Fund can be calculated.  Performing linear regression (using the holding prices as predictors and Fund price as target) trains the model with coefficients assigned to each holding.  The coefficients are a 'weight' quantifying the influence of each holding's price on the Fund price.  In theory, the coefficients should then be the same as the true weights of the holdings in the fund.
+
+Before performing the regression I needed to source the true weights of the holdings.  Fundsmith are under no obligation under UK law to disclose their holdings, but the law in the Unites States of America states that all companies that hold shares in USA companies must declare those holdings, and the amount they own, on a quarterly basis in a '13F' filing.  I found a site called [Whale Wisdom](https://whalewisdom.com/) that shows these filings.
