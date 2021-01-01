@@ -156,7 +156,7 @@ And the training data (black), forecast (blue) and test data (red)
 
 ![All data with Prophet forecast](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/proph_alldata_preds.png)
 
-As you can see, there is no way the Prophet model (or, for that matter, I believe any model) could predict the affect the Coronavirus had on the market.  What is interesting (and probably coincidental) is that the fund price recovered and followed the predicted values.
+As you can see, there is no way the Prophet model (or, for that matter, I believe any model) could predict the affect the Coronavirus had on the market.  What is interesting (and almost certainly coincidental) is that the fund price recovered to around the predicted values.
 
 Prophet also has the opportunity to output some information on the training data.
 
@@ -169,4 +169,4 @@ The third output shows that from the beginning of the year, the fund gains gener
 ## Conclusion
 
 Thanks for reading this far.  In conclusion, the linear regression failed to align the coefficients with the actual weights of the stocks in the fund.  Taking the 39 stocks that aligned most with the predicted coefficients resulted in an r2 score of 13%.
-Facebook's Prophet model could not predict the drop in the market caused by Coronavirus, but it did manage to predict the price once it had recovered.  This may be coincidental.
+Facebook's Prophet model could not predict the drop in the market caused by Coronavirus, but it did manage to predict the price once it had recovered.  This almost entirley coincidental.
