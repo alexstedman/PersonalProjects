@@ -140,10 +140,33 @@ If you wish to see the function I created to run the model, please open to toggl
 
 ----
 <details>
- <summary><b>Coefficients and true weights with maximum R2 score</b></summary>
+ <summary><b>Code of function made with Prophet to forecast the Fundsmith Equity Fund</b></summary>
  <p>
  <img src=https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/proph_code.png alt="Function created with Prophet to predict Fundsmith Equity Fund prices">
  </p>
 </details>
 
 ----
+
+The training data (black) with forecast (blue) are:
+
+![Training data with Prophet forecast](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/proph_test_preds.png)
+
+And the training data (black), forecast (blue) and test data (red)
+
+![All data with Prophet forecast](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/proph_alldata_preds.png)
+
+As you can see, there is no way the Prophet model (or, for that matter, I believe any model) could predict the affect the Coronavirus had on the market.  What is interesting (and probably coincidental) is that the fund price recovered and followed the predicted values.
+
+Prophet also has the opportunity to output some information on the training data.
+
+![All data with Prophet forecast](https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/proph_outputs.png)
+
+The first output is the prediction without the training data overlaid.  Nothing much to see here that we don't know from what we've already seen.
+The second output is the general trend of the fund price over days of the week.  From this we can immediately discount Saturday and Sunday because trading (and the fund price) do not change then. The fund price tends to make the smallest gains on Thursdays, and the largest gains on Tuesdays.
+The third output shows that from the beginning of the year, the fund gains generally increase up to mid-July, and then the gains decrease up to the end of the year.
+
+## Conclusion
+
+Thanks for reading this far.  In conclusion, the linear regression failed to align the coefficients with the actual weights of the stocks in the fund.  Taking the 39 stocks that aligned most woth the predicted coefficients resulted in an r2 score of 13%.
+Facebook's Prophet model could not predict the drop in the market caused by Coronavirus, but it did manage to predict the price once it had recovered.  This may be coincidental.
