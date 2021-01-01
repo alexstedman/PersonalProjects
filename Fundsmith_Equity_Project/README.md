@@ -137,3 +137,13 @@ Facebook released a seasonal modelling library in 2017 called Prophet.  It is in
 I set training data to be from Fund inception in November 2010 to February 2020, right before the drop in the stock market caused by the uncertainty around Coronavirus.  Test data is from February 2020 to December 2020.
 
 If you wish to see the function I created to run the model, please open to toggle below.
+
+----
+<details>
+ <summary><b>Coefficients and true weights with maximum R2 score</b></summary>
+ <p>
+ <img src=https://github.com/alexstedman/PersonalProjects/blob/main/Fundsmith_Equity_Project/images/proph_code.png alt="Function created with Prophet to predict Fundsmith Equity Fund prices">
+ </p>
+</details>
+
+----
