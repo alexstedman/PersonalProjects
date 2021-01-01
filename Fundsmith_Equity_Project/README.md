@@ -168,5 +168,5 @@ The third output shows that from the beginning of the year, the fund gains gener
 
 ## Conclusion
 
-Thanks for reading this far.  In conclusion, the linear regression failed to align the coefficients with the actual weights of the stocks in the fund.  Taking the 39 stocks that aligned most woth the predicted coefficients resulted in an r2 score of 13%.
+Thanks for reading this far.  In conclusion, the linear regression failed to align the coefficients with the actual weights of the stocks in the fund.  Taking the 39 stocks that aligned most with the predicted coefficients resulted in an r2 score of 13%.
 Facebook's Prophet model could not predict the drop in the market caused by Coronavirus, but it did manage to predict the price once it had recovered.  This may be coincidental.
